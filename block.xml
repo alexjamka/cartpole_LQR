@@ -1,0 +1,16 @@
+<mujoco model="sliding_block">
+    <worldbody>
+        <light directional="true" diffuse=".8 .8 .8" specular=".2 .2 .2" pos="0 0 5" dir="0 0 -1"/>
+        
+        <geom name="floor" type="plane" size="10 10 0.1" rgba=".8 .8 .8 1"/>
+        
+        <body name="block" pos="0 0 0.1">
+            <joint name="slider" type="slide" axis="1 0 0" frictionloss="0.1"/>
+            <geom name="block_geom" type="box" size="0.1 0.1 0.1" rgba="0 0.7 0.4 1" mass="1.0"/>
+        </body>
+    </worldbody>
+
+    <actuator>
+        <motor name="slide_motor" joint="slider" gear="1" ctrlrange="-10 10" ctrllimited="true"/>
+    </actuator>
+</mujoco>
