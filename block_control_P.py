@@ -18,7 +18,7 @@ xml_path = os.path.join(script_dir, 'block.xml')
 model = mujoco.MjModel.from_xml_path(xml_path)
 data = mujoco.MjData(model)
 
-# control parameters proportional controller, have a desired positon to reach 
+# control parameters proportional controller
 K_p = 20.0
 desired_position = 1.0
 
@@ -32,24 +32,18 @@ with mujoco.viewer.launch_passive(model, data) as viewer:
         
             step_start = time.time()
 
-            # proportional control loop w/ error
             current_position = data.qpos
 
             error = desired_position - current_position
 
-            # control signal force = K_p * error 
             control_force = K_p * error
 
-            #apply the force to our actuator (index = 0 is "slide_motor")
             data.ctrl = control_force
 
-            # step the physics forward 
             mujoco.mj_step(model, data)
 
-            # sync the viewer with the physics data 
             viewer.sync()
 
-            # maintain a clean real time simulation rate
             time_until_next_step = model.opt.timestep - time.time()
             if time_until_next_step > 0: 
                 time.sleep(time_until_next_step)
