@@ -1,0 +1,1 @@
+LQR/LQG pendulm in mujoco
